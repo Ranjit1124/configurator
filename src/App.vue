@@ -13,6 +13,7 @@ export default {
 };
 </script>
 
+
 <style>
  .letter-spacing-small {
   letter-spacing: 1px;
@@ -21,3 +22,4 @@ export default {
   letter-spacing: 2px;
 }
 </style>
+

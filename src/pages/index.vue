@@ -1,3 +1,4 @@
+
 <template>
   <v-app>
     <v-container :fluid="true" class="px-0 py-0 d-flex flex-column height">
@@ -35,5 +36,6 @@ export default {
 <style>
 .height {
   min-height: 100vh;
+
 }
 </style>

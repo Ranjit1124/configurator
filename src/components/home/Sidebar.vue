@@ -29,7 +29,7 @@ export default {
   components: {
     Dimension,
 
-</script>
+
 
 
    Texture

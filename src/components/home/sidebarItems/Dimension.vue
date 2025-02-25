@@ -1,7 +1,16 @@
 <template>
 
   <v-container :fluid="true">
-    <p class="letter-spacing-medium mb-4">DIMENSIONS</p>
+    <v-row>
+      <v-col>
+        <p class="letter-spacing-medium mb-4">DIMENSIONS</p>
+
+      </v-col>
+      <v-col>
+        <v-btn @click="defaultWallValue()" color="orange">Add Wall</v-btn>
+
+      </v-col>
+    </v-row>
     <v-row no-gutters class="my-3 bg-white">
       <v-col md="4" sm="12" class="mr-2">
         <label for="">Width</label>
@@ -71,6 +80,11 @@
 dynamicDimension(){
   this.$store.commit('SET_WIDTH',this.width)
   this.$store.commit('SET_HEIGHT',this.height)
+
+},
+defaultWallValue(){
+  const value ={width:"20",height:'10'}
+  this.$store.commit('defaultWallValue',value)
 
 }
     }

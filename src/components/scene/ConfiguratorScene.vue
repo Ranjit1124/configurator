@@ -21,7 +21,7 @@ export default {
     };
   },
   computed:{
-      ...mapState(['width','height'])
+      ...mapState(['width','height','defaultWallValue'])
   },
   watch:{
     width(newValue) {
@@ -38,6 +38,14 @@ export default {
       };
       this.threeScene.wall(this.wallValues);
     },
+    defaultWallValue(newValue){
+      this.wallValues = {
+        height: newValue.height,
+        width: newValue.width,
+      };
+      this.threeScene.wall(this.wallValues);
+
+    }
   },
   mounted() {
     this.threeContainer = this.$refs.threeContainer;

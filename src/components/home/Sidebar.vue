@@ -1,5 +1,6 @@
 <template>
-    <v-card>
+
+     <v-container :fluid="true" class="overflow  px-0">
         <v-tabs v-model="tab" color="#FF9800"  next-icon="mdi-arrow-right-bold-box-outline"
         prev-icon="mdi-arrow-left-bold-box-outline">
         <v-tab v-for="(item, index) in items" :key="index" :value="index">
@@ -12,20 +13,26 @@
         <v-window-item v-for="(item, index) in items" :key="index" :value="index">
           <v-card flat>
             <Dimension />
+            <Texture />
           </v-card>
         </v-window-item>
       </v-window>
-    </v-card>
+    </v-container>
   </template>
   
   <script>
  import Dimension from "./sidebarItems/Dimension";
-// import Texture from "./sidebarItems/Texture.vue";
+import Texture from "./sidebarItems/Texture.vue";
+
 export default {
   name: "sideBar",
   components: {
     Dimension,
-    // Texture
+
+</script>
+
+
+   Texture
       },
     data() {
       return {
@@ -42,5 +49,13 @@ export default {
   };
   </script>
     
-
+<style scoped>
+ .overflow{
+    height: 82vh;
+    overflow-y:scroll;
    
+
+ }
+</style>
+   
+

@@ -14,5 +14,10 @@ export default {
 </script>
 
 <style>
-
+ .letter-spacing-small {
+  letter-spacing: 1px;
+}
+.letter-spacing-medium {
+  letter-spacing: 2px;
+}
 </style>

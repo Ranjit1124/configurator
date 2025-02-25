@@ -8,7 +8,7 @@ import 'vuetify/styles';
 import '@mdi/font/css/materialdesignicons.css'
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
-// import store from './Store';
+import store from './store';
 // import axios from 'axios';
 // import { VNumberInput } from 'vuetify/labs/VNumberInput'
 const vuetify = createVuetify({
@@ -30,7 +30,7 @@ const app = createApp(App)
 // app.config.globalProperties.$axios = axios;
 
 // app.config.globalProperties.$axios = axios; 
-// app.use(store);
+app.use(store);
 // app.use(router)
 app.use(vuetify)
 app.mount('#app')

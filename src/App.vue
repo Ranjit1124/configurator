@@ -1,16 +1,25 @@
 <template>
-  <Index/>
+  <Index />
 </template>
 
 <script>
-import Index from './pages/index.vue'
+import Index from "./pages/index.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Index
-  }
-}
+    Index,
+  },
+};
 </script>
 
+
+<style>
+ .letter-spacing-small {
+  letter-spacing: 1px;
+}
+.letter-spacing-medium {
+  letter-spacing: 2px;
+}
+</style>
 

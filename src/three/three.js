@@ -1,6 +1,12 @@
 import * as THREE from "three";
+
 import { CSG } from 'three-csg-ts'; 
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+// import TWEEN from 'https://cdn.jsdelivr.net/npm/@tweenjs/tween.js@18.6.4/dist/tween.esm.js'
+
 
 export default class Configurator {
     constructor(container) {
@@ -10,12 +16,15 @@ export default class Configurator {
         this.renderer = null;
         this.angle = null;
 
+        this.currentDoor = null; // Track the door in the scene
+
         this.init();
     }
 
     init() {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color("#E5E4E2");
+
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
         this.renderer.shadowMap.enabled = true;
@@ -27,8 +36,10 @@ export default class Configurator {
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
+
         const light = new THREE.AmbientLight("white", 2);
         this.scene.add(light);
+
 
         window.addEventListener("resize", () => this.handleResize());
 
@@ -97,6 +108,42 @@ export default class Configurator {
         this.scene.add(cube4);
     }
 
+
+    wall(wallValues) {
+console.log('wallValues',wallValues);
+
+        this.wallWidth = wallValues?.width == null ? 5 : wallValues.width;
+        this.wallHeight = wallValues?.height == null ? 5 : wallValues.height;
+
+      if (this.currentWall) {
+        this.scene.remove(this.currentWall);
+        this.currentWall.geometry.dispose();
+        this.currentWall.material.dispose();
+    }
+
+    const geometry = new THREE.BoxGeometry(this.wallWidth, this.wallHeight);
+    const material = new THREE.MeshBasicMaterial({ color: "green" });
+    const cube = new THREE.Mesh(geometry, material);
+    this.scene.add(cube);
+
+    this.currentWall = cube;
+        // const geometry1 = new THREE.BoxGeometry(4,5);
+        // const material1 = new THREE.MeshBasicMaterial({ color: "black" }); 
+        // const cube1 = new THREE.Mesh(geometry1, material1);
+        // this.scene.add(cube1);
+        // const geometry2 = new THREE.BoxGeometry(3.8,4.8);
+        // const material2 = new THREE.MeshBasicMaterial({ color: "#464D56" }); 
+        // const cube2 = new THREE.Mesh(geometry2, material2);
+        // this.scene.add(cube2);
+        // const geometry3 = new THREE.BoxGeometry(1,4);
+        // const material3 = new THREE.MeshBasicMaterial({ color: "blue" ,transparent:true,opacity:0.4}); 
+        // const cube3 = new THREE.Mesh(geometry3, material3);
+        // cube3.position.x=-1
+        // this.scene.add(cube3);
+    }
+    
+    
+
     handleResize() {
         this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
         this.camera.updateProjectionMatrix();
@@ -105,10 +152,11 @@ export default class Configurator {
 
     animate() {
         requestAnimationFrame(() => this.animate());
+
         this.render();
     }
 
     render() {
         this.renderer.render(this.scene, this.camera);
     }
-}
+

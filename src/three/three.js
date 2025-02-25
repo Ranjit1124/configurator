@@ -160,3 +160,4 @@ console.log('wallValues',wallValues);
         this.renderer.render(this.scene, this.camera);
     }
 
+}

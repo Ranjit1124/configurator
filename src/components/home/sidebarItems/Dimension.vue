@@ -1,4 +1,5 @@
 <template>
+
   <v-container :fluid="true">
     <p class="letter-spacing-medium mb-4">DIMENSIONS</p>
     <v-row no-gutters class="my-3 bg-white">
@@ -9,6 +10,8 @@
           variant="outlined"
           density="compact"
           rounded="0"
+          v-model="width"
+            @input="dynamicDimension()"
         ></v-text-field>
       </v-col>
       <v-col md="4" sm="12">
@@ -18,6 +21,8 @@
           variant="outlined"
           density="compact"
           rounded="0"
+           v-model="height"
+            @input="dynamicDimension()"
         ></v-text-field>
       </v-col>
       <span class="subtitle letter-spacing-small text-subtitle-2"
@@ -42,26 +47,35 @@
 </template>
 
 <script>
-export default {
-  name: "sideBar",
-  data() {
-    return {
-      colors: [
-        { name: "Traffic white glossy", code: "#EEEEF2" },
-        { name: "Grey Classic", code: "#383D3E" },
-        { name: "Anthracite grey matt ", code: "#262E38" },
-        { name: "Feinstruktur Metallic Eisenglimmer", code: "#373940" },
-        { name: "Feinstruktur Metallic", code: "#878581" },
-        { name: "Jet black matt", code: "#03050A" },
-        { name: "GOLDEN OAK", code: "#895C2E" },
-        { name: "Basalt grey matt", code: "#4A5459" },
-        { name: "Darkbrown Fine texture matt", code: "#373332" },
-        { name: "Grey Sprenkel fine structure", code: "#56595C" },
-      ],
-    };
-  },
-};
-</script>
+  export default {
+    name: "dimensionPage",
+    data() {
+      return {
+        colors: [
+          { name: "Traffic white glossy", code: "#EEEEF2" },
+          { name: "Grey Classic", code: "#383D3E" },
+          { name: "Anthracite grey matt ", code: "#262E38" },
+          { name: "Feinstruktur Metallic Eisenglimmer", code: "#373940" },
+          { name: "Feinstruktur Metallic", code: "#878581" },
+          { name: "Jet black matt", code: "#03050A" },
+          { name: "GOLDEN OAK", code: "#895C2E" },
+          { name: "Basalt grey matt", code: "#4A5459" },
+          { name: "Darkbrown Fine texture matt", code: "#373332" },
+          { name: "Grey Sprenkel fine structure", code: "#56595C" },
+        ],
+        width:null,
+        height:null
+      };
+    },
+    methods:{
+dynamicDimension(){
+  this.$store.commit('SET_WIDTH',this.width)
+  this.$store.commit('SET_HEIGHT',this.height)
+
+}
+    }
+  };
+  </script>
 <style scoped>
 .subtitle {
   font-size: 14px;
@@ -79,3 +93,4 @@ label {
   letter-spacing: 1px;
 }
 </style>
+

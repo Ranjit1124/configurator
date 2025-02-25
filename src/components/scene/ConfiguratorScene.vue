@@ -1,4 +1,5 @@
 <template>
+
   <v-container :fluid="true" class="px-0 py-0">
     <div
       ref="threeContainer"
@@ -46,3 +47,4 @@ export default {
   
 };
 </script>
+

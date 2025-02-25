@@ -55,28 +55,41 @@ export default class Configurator {
 
         window.addEventListener("resize", () => this.handleResize());
         
-        this.door(); 
+        this.wall(); 
         this.animate();
     }
 
-    door() {
-        const geometry = new THREE.BoxGeometry(13,6);
-        const material = new THREE.MeshBasicMaterial({ color: "#EEEEEE" }); 
-        const cube = new THREE.Mesh(geometry, material);
-        this.scene.add(cube);
-        const geometry1 = new THREE.BoxGeometry(4,5);
-        const material1 = new THREE.MeshBasicMaterial({ color: "black" }); 
-        const cube1 = new THREE.Mesh(geometry1, material1);
-        this.scene.add(cube1);
-        const geometry2 = new THREE.BoxGeometry(3.8,4.8);
-        const material2 = new THREE.MeshBasicMaterial({ color: "#464D56" }); 
-        const cube2 = new THREE.Mesh(geometry2, material2);
-        this.scene.add(cube2);
-        const geometry3 = new THREE.BoxGeometry(1,4);
-        const material3 = new THREE.MeshBasicMaterial({ color: "blue" ,transparent:true,opacity:0.4}); 
-        const cube3 = new THREE.Mesh(geometry3, material3);
-        cube3.position.x=-1
-        this.scene.add(cube3);
+    wall(wallValues) {
+console.log('wallValues',wallValues);
+
+        this.wallWidth = wallValues?.width == null ? 5 : wallValues.width;
+        this.wallHeight = wallValues?.height == null ? 5 : wallValues.height;
+
+      if (this.currentWall) {
+        this.scene.remove(this.currentWall);
+        this.currentWall.geometry.dispose();
+        this.currentWall.material.dispose();
+    }
+
+    const geometry = new THREE.BoxGeometry(this.wallWidth, this.wallHeight);
+    const material = new THREE.MeshBasicMaterial({ color: "green" });
+    const cube = new THREE.Mesh(geometry, material);
+    this.scene.add(cube);
+
+    this.currentWall = cube;
+        // const geometry1 = new THREE.BoxGeometry(4,5);
+        // const material1 = new THREE.MeshBasicMaterial({ color: "black" }); 
+        // const cube1 = new THREE.Mesh(geometry1, material1);
+        // this.scene.add(cube1);
+        // const geometry2 = new THREE.BoxGeometry(3.8,4.8);
+        // const material2 = new THREE.MeshBasicMaterial({ color: "#464D56" }); 
+        // const cube2 = new THREE.Mesh(geometry2, material2);
+        // this.scene.add(cube2);
+        // const geometry3 = new THREE.BoxGeometry(1,4);
+        // const material3 = new THREE.MeshBasicMaterial({ color: "blue" ,transparent:true,opacity:0.4}); 
+        // const cube3 = new THREE.Mesh(geometry3, material3);
+        // cube3.position.x=-1
+        // this.scene.add(cube3);
     }
     
     
@@ -89,14 +102,7 @@ export default class Configurator {
 
     animate() {
         requestAnimationFrame(() => this.animate());
-        // this.controls.update();
-        // TWEEN.update();
-
-        this.angle += 0.01; // Speed of rotation
-        const radius = 5; // Distance from center
-        this.directionalLight.position.x = Math.cos(this.angle) * radius;
-        this.directionalLight.position.z = Math.sin(this.angle) * radius;
-        this.directionalLight.position.y = 2; // Keep height constant
+        
 
         this.directionalLight.target.updateMatrixWorld(); // Update light direction
 

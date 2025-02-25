@@ -1,11 +1,46 @@
 <template>
-    <v-container>
-        Sidebar
-    </v-container>
-</template>
-
-<script>
+    <v-card>
+        <v-tabs v-model="tab" color="#FF9800"  next-icon="mdi-arrow-right-bold-box-outline"
+        prev-icon="mdi-arrow-left-bold-box-outline">
+        <v-tab v-for="(item, index) in items" :key="index" :value="index">
+          <v-icon left>{{ item.icon }}</v-icon>
+          {{ item.title }}
+        </v-tab>
+      </v-tabs>
+  
+      <v-window v-model="tab">
+        <v-window-item v-for="(item, index) in items" :key="index" :value="index">
+          <v-card flat>
+            <Dimension />
+          </v-card>
+        </v-window-item>
+      </v-window>
+    </v-card>
+  </template>
+  
+  <script>
+ import Dimension from "./sidebarItems/Dimension";
+// import Texture from "./sidebarItems/Texture.vue";
 export default {
-    name:"sideBar"
-}
-</script>
+  name: "sideBar",
+  components: {
+    Dimension,
+    // Texture
+      },
+    data() {
+      return {
+        tab: 0, 
+        items: [
+          { title: "Wall", icon: "mdi-wall" },
+          { title: "Frame", icon: "mdi-vector-square" },
+          { title: "Door", icon: "mdi-door" },
+          { title: "Glass", icon: "mdi-window-closed-variant" },
+        ],
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      };
+    },
+  };
+  </script>
+    
+
+   

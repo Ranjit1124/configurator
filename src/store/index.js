@@ -2,12 +2,17 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    wallValue:null,
+    wallValue: null,
+    rectangleValue:null,
   },
   mutations: {
-    
-    wallValues(state, value){
+
+    wallValues(state, value) {
       state.wallValue = value;
+
+    },
+    rectangeleValues(state,value){
+      state.rectangleValue  = value
 
     }
   }

@@ -1,12 +1,14 @@
 <template>
   <v-container :fluid="true" class="px-0 py-0">
     <v-expansion-panels
-    v-model="panel" 
-    rounded="0"
-    color="#001c70"
-    flat>
-      <v-expansion-panel>
-        <v-expansion-panel-title >ADD DIMENSIONS</v-expansion-panel-title>
+      multiple
+      v-model="panel"
+      rounded="0"
+      color="#084b8e"
+      flat
+    >
+      <v-expansion-panel class="pb-2">
+        <v-expansion-panel-title>OVERALL DIMENSIONS</v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-row no-gutters class="bg-white d-flex align-center">
             <v-col md="3" sm="12" class="mr-2">
@@ -33,8 +35,7 @@
             </v-col>
             <v-col md="3" sm="12">
               <v-btn
-
-                color="blue"
+                color="#344e9b"
                 variant="outlined"
                 flat
                 @click="dynamicDimension"
@@ -47,8 +48,51 @@
           <span class="text-subtitle-2 text-red d-block">{{ errMsg }}</span>
         </v-expansion-panel-text>
       </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-title> ADD RECTANGLE</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-row no-gutters class="bg-white d-flex align-center">
+            <v-col md="3" sm="12" class="mr-2">
+              <label for="">Width</label>
+              <v-text-field
+                placeholder="in mm"
+                variant="outlined"
+                density="compact"
+                rounded="0"
+                type="number"
+                v-model="rectangleWidth"
+              ></v-text-field>
+            </v-col>
+            <v-col md="3" sm="12" class="mr-2">
+              <label for="">Height</label>
+              <v-text-field
+                type="number"
+                placeholder="in mm"
+                variant="outlined"
+                density="compact"
+                rounded="0"
+                v-model="rectangleHeight"
+              ></v-text-field>
+            </v-col>
+            <v-col md="3" sm="12">
+              <v-btn
+                color="blue"
+                variant="outlined"
+                flat
+                @click="rectangleDimension()"
+                block
+              >
+                ADD
+              </v-btn>
+           
+            </v-col>
+          </v-row>
+          <span class="text-subtitle-2 text-red d-block">{{
+            rectangleErrMsg
+          }}</span>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
     </v-expansion-panels>
-   
   </v-container>
 </template>
 
@@ -72,7 +116,7 @@ export default {
         { name: "Darkbrown Fine texture matt", code: "#373332" },
         { name: "Grey Sprenkel fine structure", code: "#56595C" },
       ],
-      panel: [0],
+      panel: [0, 1],
       // wallRules: {
       //   minHeight: 1,
       //   maxHeight: 15,
@@ -99,12 +143,17 @@ export default {
       // },
       width: null,
       height: null,
+      rectangleHeight: null,
+      rectangleWidth: null,
       errMsg: null,
+      rectangleErrMsg: null,
+      isRectangle:true,
     };
   },
   methods: {
     dynamicDimension() {
       this.errMsg = "";
+
       if (!this.height?.toString().trim() || !this.width?.toString().trim()) {
         this.errMsg = "Enter Both Values";
         return;
@@ -131,12 +180,47 @@ export default {
       //     return;
       //   }
       // }
-const values = {width:this.width,height:this.height}
+      const values = { width: this.width/100, height: this.height/100 };
       this.$store.commit("wallValues", values);
-      // this.$store.commit("SET_HEIGHT", this.height);
+    },
+    rectangleDimension() {
+      if (!this.height?.toString().trim() || !this.width?.toString().trim()) {
+        setTimeout(() => {
+          this.rectangleErrMsg = "";
+          this.rectangleHeight = "";
+          this.rectangleWidth = "";
+        }, 2000);
+        this.rectangleErrMsg = "FIRST ADD OVERALL DIMENSION ";
+        return;
+      }
+      if (
+        !this.rectangleHeight?.toString().trim() ||
+        !this.rectangleWidth?.toString().trim()
+      ) {
+        this.rectangleErrMsg = "Enter Both Values";
+        return;
+      }
       
-      this.height = "";
-      this.width = "";
+      if (
+        Number(this.rectangleHeight) >= Number(this.height) ||
+        Number(this.rectangleWidth) >= Number(this.width)
+      ) {
+        this.rectangleErrMsg =
+          "Height and Width must be less than the overall dimension";
+
+        setTimeout(() => {
+          this.rectangleErrMsg = "";
+          this.rectangleHeight = "";
+          this.rectangleWidth = "";
+        }, 2000);
+      } else {
+        const values = {
+          width: this.rectangleWidth/100,
+          height: this.rectangleHeight/100,
+        };
+        this.$store.commit("rectangeleValues", values);
+        this.isRectangle = false
+      }
     },
   },
 };

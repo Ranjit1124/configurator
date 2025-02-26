@@ -118,8 +118,6 @@ addTransformControlToGlobalArray(event) {
         this.wallWidth = wallValues?.width ?? 0;
         this.wallHeight = wallValues?.height ?? 0;
     
-      
-    
         const geometry = new THREE.BoxGeometry(this.wallWidth, this.wallHeight, 0.5);
         const material = new THREE.MeshBasicMaterial({ color: "#82807C" });
         const cube = new THREE.Mesh(geometry, material);

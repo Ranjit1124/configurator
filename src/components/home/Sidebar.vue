@@ -1,5 +1,8 @@
 <template>
+    <v-container :fluid="true" class="overflow  pa-0">
+      <Dimension />
 
+    </v-container>
      <!-- <v-container :fluid="true" class="overflow  px-0">
         <v-tabs v-model="tab" color="#FF9800"  next-icon="mdi-arrow-right-bold-box-outline"
         prev-icon="mdi-arrow-left-bold-box-outline">
@@ -18,7 +21,6 @@
         </v-window-item>
       </v-window>
     </v-container> -->
-    <Dimension />
   </template>
   
   <script>
@@ -37,22 +39,24 @@ export default {
       },
     data() {
       return {
-        tab: 0, 
-        items: [
-          { title: "Wall", icon: "mdi-wall" },
-          { title: "Frame", icon: "mdi-vector-square" },
-          { title: "Door", icon: "mdi-door" },
-          { title: "Glass", icon: "mdi-window-closed-variant" },
-        ],
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-      };
-    },
+    //     tab: 0, 
+    //     items: [
+    //       { title: "Wall", icon: "mdi-wall" },
+    //       { title: "Frame", icon: "mdi-vector-square" },
+    //       { title: "Door", icon: "mdi-door" },
+    //       { title: "Glass", icon: "mdi-window-closed-variant" },
+    //     ],
+    //     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    //   };
+    // },
+      }
+    }
   };
   </script>
     
 <style scoped>
  .overflow{
-    height: 82vh;
+    height: 90vh;
     overflow-y:scroll;
    
 

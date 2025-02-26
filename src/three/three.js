@@ -122,6 +122,7 @@ export default class Configurator {
     }
   }
 
+
   wall(wallValues) {
     // Remove the previous wall if it exists
     if (this.currentWall) {

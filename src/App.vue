@@ -1,5 +1,7 @@
 <template>
-  <Index />
+  <div id="app">
+    <Index />
+  </div>
 </template>
 
 <script>
@@ -13,13 +15,15 @@ export default {
 };
 </script>
 
-
 <style>
- .letter-spacing-small {
+.letter-spacing-small {
   letter-spacing: 1px;
 }
 .letter-spacing-medium {
   letter-spacing: 2px;
 }
-</style>
+#app{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
+}
+</style>

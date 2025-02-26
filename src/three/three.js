@@ -1,5 +1,5 @@
 import * as THREE from "three";
-// import { CSG } from 'three-csg-ts'; 
+
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { TransformControls } from "three/examples/jsm/controls/TransformControls.js";
 // import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -9,8 +9,8 @@ import { TransformControls } from "three/examples/jsm/controls/TransformControls
 // import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 // import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 
-
 export default class Configurator {
+
     constructor(container) {
         this.container = container;
         this.scene = null;
@@ -77,7 +77,66 @@ export default class Configurator {
         this.animate();
     }
 
+
+  init() {
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color("#E5E4E2");
+
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true, // Smooth edges
+      preserveDrawingBuffer: true, // Keep buffer for screenshots
+    });
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Softer shadows
+    this.renderer.setSize(
+      this.container.clientWidth,
+      this.container.clientHeight
+    );
+    this.container.appendChild(this.renderer.domElement);
+
+    this.camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.5,
+      1000
+    );
+    this.camera.position.set(0, 0, 5);
+
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    const sunLight = new THREE.DirectionalLight("white", 1);
+    sunLight.position.set(5, 5, 10);
+    sunLight.castShadow = true; // Enable shadows
+    this.scene.add(sunLight);
+
+    const light = new THREE.AmbientLight("white", 5);
+    this.scene.add(light);
+
+    // this.composer = new EffectComposer(this.renderer);
+    // this.composer.addPass(new RenderPass(this.scene, this.camera));
+
+    // const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.8, 0.4, 0.85);
+    // this.composer.addPass(bloomPass);
+
+    window.addEventListener("resize", () => this.handleResize());
+
+    // this.assembleDoorWithFrame()
+    this.wall();
+
+    this.transformControls = new TransformControls(
+      this.camera,
+      this.renderer.domElement
+    );
+    this.scene.add(this.transformControls);
+
+    this.renderer.domElement.addEventListener("click", (event) => {
+      this.addTransformControlToGlobalArray(event);
+    });
+    this.transformControls.addEventListener("objectChange", () => {
+      const draggedObject = this.transformControls.object;
+      console.log(draggedObject);
+    });
    
+
     addTransformControlToGlobalArray(event) {
         const rect = this.renderer.domElement.getBoundingClientRect();
         let mouse = new THREE.Vector2();
@@ -122,24 +181,7 @@ export default class Configurator {
     }
     
  
-    wall(wallValues) {
-        this.wallValues=wallValues
-        this.wallWidth = wallValues?.width ?? 0;
-        this.wallHeight = wallValues?.height ?? 0;
     
-      
-    
-        const geometry = new THREE.BoxGeometry(this.wallWidth, this.wallHeight, 0.1);
-        const material = new THREE.MeshBasicMaterial({ color: "#82807C" });
-        const cube = new THREE.Mesh(geometry, material);
-        this.scene.add(cube);
-        this.raycasterObject.push(cube)
-        // this.currentWall = cube;
-    
-        // if (this.currentWall) {
-        //     this.cutWallWithFrame(this.currentWall);
-        // }
-    }
     Door(rectangleValue) {
         this.rectangleValue=rectangleValue;
         this.wallWidth1 = rectangleValue?.width ?? 0;
@@ -155,20 +197,51 @@ export default class Configurator {
      
     }
 
-    handleResize() {
-        this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+
+
+  wall(wallValues) {
+    // Remove the previous wall if it exists
+    if (this.currentWall) {
+        this.scene.remove(this.currentWall);
+        this.raycasterObject = this.raycasterObject.filter(obj => obj !== this.currentWall);
+        this.currentWall.geometry.dispose();
+        this.currentWall.material.dispose();
+        this.currentWall = null;
     }
 
-    animate() {
-        requestAnimationFrame(() => this.animate());
-        // this.composer.render();
-        this.render();
-    }
+    // Set new wall values
+    this.wallWidth = wallValues?.width ?? 0;
+    this.wallHeight = wallValues?.height ?? 0;
 
-    render() {
-        this.renderer.render(this.scene, this.camera);
-    }
+    // Create new wall
+    const geometry = new THREE.BoxGeometry(this.wallWidth, this.wallHeight, 0.5);
+    const material = new THREE.MeshBasicMaterial({ color: "#82807C" });
+    const cube = new THREE.Mesh(geometry, material);
 
+    // Add new wall to scene and raycaster objects
+    this.scene.add(cube);
+    this.raycasterObject.push(cube);
+    this.currentWall = cube; // Store reference to the new wall
+}
+
+
+  handleResize() {
+    this.camera.aspect =
+      this.container.clientWidth / this.container.clientHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(
+      this.container.clientWidth,
+      this.container.clientHeight
+    );
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+    // this.composer.render();
+    this.render();
+  }
+
+  render() {
+    this.renderer.render(this.scene, this.camera);
+  }
 }

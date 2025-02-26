@@ -18,11 +18,12 @@ export default {
       threeContainer: null,
       threeScene: null,
       wallValues: null,
+      rectangleValues:null,
 
     };
   },
   computed:{
-      ...mapState(['wallValue'])
+      ...mapState(['wallValue','rectangleValue'])
   },
   watch:{
     wallValue(newValue) {
@@ -31,6 +32,13 @@ export default {
         width: newValue.width,
       };
       this.threeScene.wall(this.wallValues);
+    },
+    rectangleValue(newrectangleValue) {
+      this.rectangleValues = {
+        height: newrectangleValue.height,
+        width: newrectangleValue.width,
+      };
+      this.threeScene.Door(this.rectangleValues);
     },
   },
   mounted() {

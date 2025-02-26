@@ -1,13 +1,16 @@
 <template>
   <v-container :fluid="true" class="px-0 py-0">
     <v-expansion-panels
+
       variant="popout"
+
       multiple
       v-model="panel"
       rounded="0"
       color="#084b8e"
       flat
     >
+
       <v-expansion-panel  class="pb-1">
         <v-expansion-panel-title>OVERALL DIMENSIONS</v-expansion-panel-title>
         <v-expansion-panel-text>
@@ -69,6 +72,7 @@
       </v-expansion-panel>
       <v-expansion-panel>
         <v-expansion-panel-title> ADD RECTANGLE</v-expansion-panel-title>
+
         <v-expansion-panel-text>
           <v-row no-gutters class="bg-white d-flex align-center">
             <v-col md="3" sm="12" class="mr-2">
@@ -95,8 +99,10 @@
             </v-col>
             <v-col md="3" sm="12">
               <v-btn
+
                 v-if="isRectangle"
                 color="blue"
+
                 variant="outlined"
                 flat
                 @click="rectangleDimension()"
@@ -107,6 +113,50 @@
               <v-btn v-else color="red" variant="outlined" flat block>
                 Delete
               </v-btn>
+            </v-col>
+          </v-row>
+          <span class="text-subtitle-2 text-red d-block">{{
+            rectangleErrMsg
+          }}</span>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-title> ADD RECTANGLE</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-row no-gutters class="bg-white d-flex align-center">
+            <v-col md="3" sm="12" class="mr-2">
+              <label for="">Width</label>
+              <v-text-field
+                placeholder="in mm"
+                variant="outlined"
+                density="compact"
+                rounded="0"
+                type="number"
+                v-model="rectangleWidth"
+              ></v-text-field>
+            </v-col>
+            <v-col md="3" sm="12" class="mr-2">
+              <label for="">Height</label>
+              <v-text-field
+                type="number"
+                placeholder="in mm"
+                variant="outlined"
+                density="compact"
+                rounded="0"
+                v-model="rectangleHeight"
+              ></v-text-field>
+            </v-col>
+            <v-col md="3" sm="12">
+              <v-btn
+                color="blue"
+                variant="outlined"
+                flat
+                @click="rectangleDimension()"
+                block
+              >
+                ADD
+              </v-btn>
+           
             </v-col>
           </v-row>
           <span class="text-subtitle-2 text-red d-block">{{
@@ -164,14 +214,18 @@ export default {
       //   maxWidth: 15,
       // },
 
+
       overallWidth: null,
       overallHeight: null,
+
       rectangleHeight: null,
       rectangleWidth: null,
       errMsg: null,
       rectangleErrMsg: null,
+
       isRectangle: true,
       isOverall:true,
+
 
     };
   },
@@ -181,7 +235,9 @@ export default {
       this.errMsg = "";
 
 
+
         if (!this.overallHeight?.toString().trim() || !this.overallWidth?.toString().trim()) {
+
 
         this.errMsg = "Enter Both Values";
         return;
@@ -212,10 +268,12 @@ export default {
       //   }
       // }
 
+
       const values = {width:this.overallWidth/100,height:this.overallHeight/100}
       this.$store.commit("wallValues", values);
       this.isOverall=false
       // this.$store.commit("SET_HEIGHT", this.height);
+
     },
     rectangleDimension() {
       const setError = (message) => {

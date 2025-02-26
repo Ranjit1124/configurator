@@ -1,6 +1,6 @@
 <template>
 
-     <v-container :fluid="true" class="overflow  px-0">
+     <!-- <v-container :fluid="true" class="overflow  px-0">
         <v-tabs v-model="tab" color="#FF9800"  next-icon="mdi-arrow-right-bold-box-outline"
         prev-icon="mdi-arrow-left-bold-box-outline">
         <v-tab v-for="(item, index) in items" :key="index" :value="index">
@@ -17,12 +17,13 @@
           </v-card>
         </v-window-item>
       </v-window>
-    </v-container>
+    </v-container> -->
+    <Dimension />
   </template>
   
   <script>
  import Dimension from "./sidebarItems/Dimension";
-import Texture from "./sidebarItems/Texture.vue";
+// import Texture from "./sidebarItems/Texture.vue";
 
 export default {
   name: "sideBar",
@@ -32,7 +33,7 @@ export default {
 
 
 
-   Texture
+  //  Texture
       },
     data() {
       return {

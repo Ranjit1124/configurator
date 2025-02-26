@@ -22,20 +22,13 @@ export default {
     };
   },
   computed:{
-      ...mapState(['width','height'])
+      ...mapState(['wallValue'])
   },
   watch:{
-    width(newValue) {
+    wallValue(newValue) {
       this.wallValues = {
-        height: this.height,
-        width: newValue,
-      };
-      this.threeScene.wall(this.wallValues);
-    },
-    height(newValue) {
-      this.wallValues = {
-        height: newValue,
-        width: this.width,
+        height: newValue.height,
+        width: newValue.width,
       };
       this.threeScene.wall(this.wallValues);
     },

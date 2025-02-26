@@ -11,7 +11,7 @@
           <v-col cols="4" class="d-flex flex-column">
             <Sidebar />
             <v-spacer />
-            <Footer />
+            <!-- <Footer /> -->
           </v-col>
         </v-row>
       </v-container>
@@ -21,13 +21,13 @@
 <script>
 import Configurator from "../components/scene/ConfiguratorScene";
 import Header from "@/components/ui/Header";
-import Footer from "@/components/ui/Footer";
+// import Footer from "@/components/ui/Footer";
 import Sidebar from "@/components/home/Sidebar.vue";
 export default {
   name: "indexPage",
   components: {
     Header,
-    Footer,
+    // Footer,
     Sidebar,
     Configurator,
   },

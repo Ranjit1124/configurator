@@ -2,18 +2,13 @@ import { createStore } from "vuex";
 
 const store = createStore({
   state: {
-    width: 5,
-    height: 5,
+    wallValue:null,
   },
   mutations: {
-    SET_WIDTH(state, newWidth) {
-      console.log("store", newWidth);
-      state.width = newWidth;
-    },
-    SET_HEIGHT(state, newHeight) {
-        console.log("store", newHeight);
+    
+    wallValues(state, value){
+      state.wallValue = value;
 
-      state.height = newHeight;
     }
   }
 });

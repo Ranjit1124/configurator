@@ -15,35 +15,53 @@
             <v-col md="3" sm="12" class="mr-2">
               <label for="">Width</label>
               <v-text-field
-                placeholder="e.g.2500cm"
+                placeholder="250mm"
                 variant="outlined"
                 density="compact"
                 rounded="0"
+                v-model="overallWidth"
                 type="number"
-                v-model="width"
+
               ></v-text-field>
             </v-col>
             <v-col md="3" sm="12" class="mr-2">
               <label for="">Height</label>
               <v-text-field
-                type="number"
-                placeholder="e.g.2500mm"
+                placeholder="250mm"
                 variant="outlined"
                 density="compact"
                 rounded="0"
-                v-model="height"
+                v-model="overallHeight"
+                type="number"
+
               ></v-text-field>
             </v-col>
+
             <v-col md="3" sm="12">
               <v-btn
                 color="#344e9b"
+
                 variant="outlined"
                 flat
-                @click="dynamicDimension"
-                block
+                @click="overallDimension"
+                v-if="isOverall"                
+
               >
                 ADD
               </v-btn>
+               
+                  <v-btn
+
+                color="red"
+                variant="outlined"
+                flat
+                @click="deleteDimension"
+                v-else
+              >
+                Delete
+              </v-btn>
+              
+              
             </v-col>
           </v-row>
           <span class="text-subtitle-2 text-red d-block">{{ errMsg }}</span>
@@ -145,23 +163,32 @@ export default {
       //   minWidth: 10,
       //   maxWidth: 15,
       // },
-      width: null,
-      height: null,
+
+      overallWidth: null,
+      overallHeight: null,
       rectangleHeight: null,
       rectangleWidth: null,
       errMsg: null,
       rectangleErrMsg: null,
       isRectangle: true,
+      isOverall:true,
+
     };
   },
   methods: {
-    dynamicDimension() {
+
+    overallDimension() {
       this.errMsg = "";
 
-      if (!this.height?.toString().trim() || !this.width?.toString().trim()) {
+
+        if (!this.overallHeight?.toString().trim() || !this.overallWidth?.toString().trim()) {
+
         this.errMsg = "Enter Both Values";
         return;
       }
+
+      
+     
       // const allRules = {
       //   wall: this.wallRules,
       //   frame: this.frameRules,
@@ -184,8 +211,11 @@ export default {
       //     return;
       //   }
       // }
-      const values = { width: this.width, height: this.height };
+
+      const values = {width:this.overallWidth/100,height:this.overallHeight/100}
       this.$store.commit("wallValues", values);
+      this.isOverall=false
+      // this.$store.commit("SET_HEIGHT", this.height);
     },
     rectangleDimension() {
       const setError = (message) => {
@@ -222,7 +252,18 @@ export default {
         });
         this.isRectangle = false;
       }
+
+
     },
+    deleteDimension(){
+      console.log('delete');
+      const values = {width:0,height:0}
+      this.$store.commit("wallValues", values);
+      this.overallWidth=''
+      this.overallHeight=''
+      this.isOverall=true
+
+    }
   },
 };
 </script>
